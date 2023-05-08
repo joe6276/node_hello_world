@@ -1,0 +1,30 @@
+GET http://localhost:4000/todo
+
+###
+
+POST http://localhost:4000/todo
+Content-Type: application/json
+
+{
+    "title":"Title 2",
+    "description":"Description 2"
+}
+
+###
+
+GET http://localhost:4000/todo/7328
+
+
+###
+
+PUT http://localhost:4000/todo/3215
+Content-Type: application/json
+
+{
+    "title":"Updated Title 2",
+    "description":"Updated Description 2"
+}
+
+
+###
+DELETE  http://localhost:4000/todo/3215
