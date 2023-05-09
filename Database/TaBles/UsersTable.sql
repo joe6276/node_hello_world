@@ -1,0 +1,10 @@
+CREATE TABLE Users (
+id VARCHAR(200),
+name VARCHAR(200),
+email VARCHAR(200) UNIQUE,
+roles VARCHAR(10) DEFAULT 'user',
+isDeleted INT DEFAULT 0,
+emailSent INT DEFAULT 0,
+password VARCHAR(200) 
+)
+

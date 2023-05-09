@@ -1,0 +1,7 @@
+
+CREATE OR ALTER PROCEDURE getProperties
+AS
+BEGIN
+SELECT * FROM Properties WHERE isDeleted=0
+
+END
