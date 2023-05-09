@@ -1,6 +1,3 @@
-
-
-
 CREATE OR ALTER PROCEDURE updateLandlord  (@id VARCHAR(200) , @name VARCHAR(200)
 ,@email VARCHAR(200), @propertyDocs VARCHAR(200))
 AS

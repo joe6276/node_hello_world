@@ -1,5 +1,5 @@
 
-CREATE OR ALTER PROCEDURE getALLApproved(@type VARCHAR(100))
+CREATE OR ALTER PROCEDURE getLandLordsByStatus (@type VARCHAR(100))
 AS
 BEGIN
  IF @type ='approved'
