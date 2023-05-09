@@ -2,10 +2,18 @@
 import express, {json} from 'express'
 import router from './Routes'
 import userRoutes from './Routes/userRoutes'
+import landlordRoutes from './Routes/landLordRoutes'
+import adminRoutes from './Routes/adminRoutes'
+import propertyRoutes from './Routes/propertyRoutes'
 const app=express()
 app.use(json())// middleware
+
 app.use('/todo',router)
 app.use('/users', userRoutes)
+app.use('/landlords', landlordRoutes)
+app.use('/admin', adminRoutes)
+app.use('/property', propertyRoutes)
+
 app.listen(4000, ()=>{
     console.log("Server Running...")
 })
