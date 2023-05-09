@@ -3,7 +3,7 @@ import { log } from 'console'
 import dotenv from 'dotenv'
 import path from 'path'
 dotenv.config({path:path.resolve(__dirname, '../../.env')})
-const sqlConfig = {
+export const sqlConfig = {
   user: process.env.DB_USER as string,
   password: process.env.DB_PWD as string,
   database: process.env.DB_NAME as string,
@@ -19,10 +19,10 @@ const sqlConfig = {
   }
 }
 
-sql.connect(sqlConfig).then(pool=>{
-    if(pool.connected){
-        console.log("I'm Connected  the database");
+// sql.connect(sqlConfig).then(pool=>{
+//     if(pool.connected){
+//         console.log("I'm Connected  the database");
         
-    }
-})
+//     }
+// })
 
