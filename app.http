@@ -28,3 +28,44 @@ Content-Type: application/json
 
 ###
 DELETE  http://localhost:4000/todo/6324
+
+
+###
+
+POST http://localhost:4000/users
+Content-Type:  application/json
+
+{
+   "name":"Mary Mwangi" ,
+   "email":"mary3@gmail.com",
+   "password":"12345678"
+}
+
+
+###
+
+GET http://localhost:4000/users
+
+
+###
+GET http://localhost:4000/users/joy@gmail.com
+
+
+###
+GET http://localhost:4000/users/user/f8249d87-9637-4c20-a5a5-1cc7073aa79a
+
+###
+
+PUT http://localhost:4000/users/f8249d87-9637-4c20-a5a5-1cc7073aa79a
+Content-Type:  application/json
+
+{
+   "name":"Joy Mary Jepkosgei" ,
+   "email":"joymary@gmail.com",
+   "password":"123456789"
+}
+
+
+###
+
+DELETE http://localhost:4000/users/cd5e45bd-92c0-4c36-a907-5f79fe28d4d8
