@@ -1,0 +1,7 @@
+
+CREATE OR ALTER PROCEDURE getProperty(@id VARCHAR(200))
+AS
+BEGIN
+SELECT * FROM Properties WHERE id=@id AND  isDeleted=0
+
+END
