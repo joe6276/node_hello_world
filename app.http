@@ -77,15 +77,35 @@ POST http://localhost:4000/landlords
 Content-Type:  application/json
 
 {
-    "name":"Allan Kamau",
-    "email":"allan@gmail.com",
+    "name":"Allan Mwangi",
+    "email":"allan22@gmail.com",
     "propertyDocs":"link",
     "password":"12345678"
 
 }
 ###
-PUT http://localhost:4000/admin/30d2b669-adc5-478b-b01e-3b72a569a4cb
+GET http://localhost:4000/landlords/approved
+###
+GET http://localhost:4000/landlords/unapproved
+###
 
+GET http://localhost:4000/landlords/get/30d2b669-adc5-478b-b01e-3b72a569a4cb
+
+###
+PUT http://localhost:4000/landlords/30d2b669-adc5-478b-b01e-3b72a569a4cb
+Content-Type: application/json
+
+{
+  "name":"Allan Kamau",
+  "email":"allan23@gmail.com"
+}
+
+
+###
+DELETE  http://localhost:4000/landlords/30d2b669-adc5-478b-b01e-3b72a569a4cb
+###
+PUT http://localhost:4000/admin/90bcaafd-fa15-46d2-a62e-f10f4ec421de
+####
 
 
 ###
@@ -114,12 +134,12 @@ GET http://localhost:4000/property
 
 GET http://localhost:4000/property/c7a29a9d-a14c-4418-85c5-d9d037540363
 
-
-POST http://localhost:4000/property/c7a29a9d-a14c-4418-85c5-d9d037540363
+###
+PUT http://localhost:4000/property/c7a29a9d-a14c-4418-85c5-d9d037540363
 Content-Type: application/json
 
   {
-       "name":"House of Designers",
+       "name":"House of Full-stacks",
         "location":"Nyeri",
         "lat":"32.05",
         "lon":"-0.32",
@@ -129,3 +149,6 @@ Content-Type: application/json
         "condition":"Good Condition",
         "owner":"30d2b669-adc5-478b-b01e-3b72a569a4cb"
   }
+
+####
+DELETE  http://localhost:4000/property/c7a29a9d-a14c-4418-85c5-d9d037540363
