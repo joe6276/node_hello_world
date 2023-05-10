@@ -1,9 +1,10 @@
+
 import { Request, RequestHandler, Response } from "express";
 import mssql from 'mssql'
 import { sqlConfig } from "../config";
 import {v4 as uid} from 'uuid'
 import bcrypt from 'bcrypt'
-import { log } from "console";
+
 interface ExtendedRequest extends Request{
  body:{
     name:string

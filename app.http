@@ -77,10 +77,22 @@ POST http://localhost:4000/landlords
 Content-Type:  application/json
 
 {
-    "name":"Allan Mwangi",
-    "email":"allan22@gmail.com",
+    "name":"Belinda Florence",
+    "email":"belinda1@gmail.com",
     "propertyDocs":"link",
-    "password":"12345678"
+    "password":"Test@2023"
+
+}
+
+###
+
+POST http://localhost:4000/landlords/login
+Content-Type:  application/json
+
+{
+  
+    "email":"belinda1@gmail.com",
+    "password":"Test@2023"
 
 }
 ###
@@ -101,32 +113,39 @@ Content-Type: application/json
 }
 
 
+####
+POST http://localhost:4000/landlords/login
+Content-Type: application/json
+
+{
+ "email":"jonathan@gmail.com",
+ "password":"12345678"
+}
 ###
 DELETE  http://localhost:4000/landlords/30d2b669-adc5-478b-b01e-3b72a569a4cb
 ###
-PUT http://localhost:4000/admin/90bcaafd-fa15-46d2-a62e-f10f4ec421de
-####
+PUT http://localhost:4000/admin/dc95e911-3818-4158-a27a-00a9de99bdc8
 
 
 ###
 
 POST http://localhost:4000/property
 Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRjOTVlOTExLTM4MTgtNDE1OC1hMjdhLTAwYTlkZTk5YmRjOCIsIm5hbWUiOiJCZWxpbmRhIEZsb3JlbmNlIiwiZW1haWwiOiJiZWxpbmRhMUBnbWFpbC5jb20iLCJpYXQiOjE2ODM3MDU0NTAsImV4cCI6MTY4NDA2NTQ1MH0.wrcxQYnDUmiy7yvVQsQELkN7zvISDih20plLSSap1eU
 
   {
-       "name":"House of Designers",
+       "name":"House of Jitu",
         "location":"Nyeri",
         "lat":"32.05",
         "lon":"-0.32",
         "images":"link",
         "videos":"link",
         "price":20000,
-        "condition":"Good Condition",
-        "owner":"30d2b669-adc5-478b-b01e-3b72a569a4cb"
+        "condition":"Good Condition"
   }
 
 ###
-  
+  # dc95e911-3818-4158-a27a-00a9de99bdc8
 GET http://localhost:4000/property
 
 
