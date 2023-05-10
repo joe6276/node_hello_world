@@ -2,7 +2,11 @@ import { Response,Request } from "express";
 import mssql from 'mssql'
 import {v4 as uid} from 'uuid'
 import { sqlConfig } from "../config";
-
+interface DecodedData{
+    id: string;
+    name: string;
+    email: string;
+}
 interface ExtendedRequest extends Request{
     body:{
         name:string,
@@ -15,6 +19,7 @@ interface ExtendedRequest extends Request{
         condition:string
         owner:string
     }
+    info?:DecodedData
 }
 
 interface Property {
@@ -36,19 +41,21 @@ export const addProperty = async(req:ExtendedRequest, res:Response)=>{
     try {
         let id=uid()
         const pool =await mssql.connect(sqlConfig)
-        const {name,location,lat,lon,images,videos,price,condition,owner}=req.body
-        await pool.request()
-        .input('id',id)
-        .input('name',name)
-        .input('location',location)
-        .input('lat',lat)
-        .input('lon',lon)
-        .input('images',images)
-        .input('videos',videos)
-        .input('price',price)
-        .input('condition',condition)
-        .input('owner',owner)
-        .execute('insertProperty')
+        const {name,location,lat,lon,images,videos,price,condition}=req.body
+        if(req.info){
+            await pool.request()
+            .input('id',id)
+            .input('name',name)
+            .input('location',location)
+            .input('lat',lat)
+            .input('lon',lon)
+            .input('images',images)
+            .input('videos',videos)
+            .input('price',price)
+            .input('condition',condition)
+            .input('owner',req.info.id)
+            .execute('insertProperty')
+        }
         return res.status(201).json({message:"Property Added Successfully"})
     } catch (error:any) {
         
