@@ -85,7 +85,7 @@ export const getUnApproved= async (req:Request, res:Response)=>{
        let approved= await (await pool.request()
         .input('type', 'unapproved')
         .execute('getLandLordsByStatus')).recordset
-        return res.status(200).json(approved)
+        // return res.status(200).json(approved)
         
     } catch (error:any) {
         //server side error

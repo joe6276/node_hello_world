@@ -4,6 +4,11 @@ import mssql from 'mssql'
 import { sqlConfig } from "../config";
 import {v4 as uid} from 'uuid'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+import path from 'path'
+dotenv.config({path:path.resolve(__dirname, '../../.env')})
+
 
 interface ExtendedRequest extends Request{
  body:{
@@ -167,5 +172,37 @@ export const deleteUser=async(req:Request<{id:string}>, res:Response)=>{
     } catch (error:any) {
         //server side error
         return res.status(500).json(error.message)  
+    }
+}
+
+export const loginUser= async (req:Request, res:Response)=>{
+    try {
+        const pool = await mssql.connect(sqlConfig) 
+        const{email,password}= req.body
+
+        let user:User[] =(await (await pool.request())
+        .input('email', email)
+        .execute('getUserByEmail')).recordset
+
+        if(!user[0]){
+            return res.status(404).json({message:"User not Found"})
+          }
+    
+          let validPassword = await bcrypt.compare(password,user[0].password)
+         
+          if(!validPassword){
+            return res.status(404).json({message:"User not Found"})
+          }
+        
+         const payload= user.map(usr=>{
+            const {password, isDeleted,emailSent,...rest}=usr
+            return rest
+         })
+         const token = jwt.sign(payload[0], process.env.SECRET_KEY as string)
+          res.status(200).json(token)
+
+    } catch (error:any) {
+          //server side error
+          return res.status(500).json(error.message)
     }
 }

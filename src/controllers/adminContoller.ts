@@ -13,21 +13,35 @@ interface Landlord {
     approved:number
     emailsent:number
 }
-export const approveLandlord=async(req:Request<{id:string}>, res:Response)=>{
+
+interface DecodedData{
+    id: string;
+    name: string;
+    email: string;
+    roles:string
+}
+interface ExtendedRequest extends Request{
+    info?:DecodedData
+}
+export const approveLandlord=async(req:ExtendedRequest , res:Response)=>{
     try {
-        const {id}=req.params
-        const pool= await mssql.connect(sqlConfig)
-        let landlord:Landlord[]= await (await pool.request()
-        .input('id', id)
-        .execute('getLandLordById')).recordset[0]
-        if(!landlord){
-            return res.status(404).json({message:"LandLord Not Found"})
-        }      
-        // //first check if landlord exist(todo)
-        await pool.request()
-        .input('id',id)
-        .execute('approveLandlord') 
-        return res.status(200).json({message:"Landlord Updated"})
+       
+        if(req.info && req.info.roles=='admin'){
+            const {id}=req.params
+            const pool= await mssql.connect(sqlConfig)
+            let landlord:Landlord[]= await (await pool.request()
+            .input('id', id)
+            .execute('getLandLordById')).recordset[0]
+            if(!landlord){
+                return res.status(404).json({message:"LandLord Not Found"})
+            }      
+            // //first check if landlord exist(todo)
+            await pool.request()
+            .input('id',id)
+            .execute('approveLandlord') 
+            return res.status(200).json({message:"Landlord Updated"})
+        }
+         return res.status(403).json({message:"Forbidden"})
         
     } catch (error:any) {
          //server side error
