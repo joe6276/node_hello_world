@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addUser, deleteUser, getAllUsers, getUserByEmail, getUserById, updateUser } from "../controllers/userController";
+import { addUser, deleteUser, getAllUsers, getUserByEmail, getUserById, loginUser, updateUser } from "../controllers/userController";
 
 const userRoutes= Router()
 
@@ -7,10 +7,10 @@ const userRoutes= Router()
 userRoutes.post('', addUser)
 userRoutes.get('', getAllUsers)
 userRoutes.get('/user/:id', getUserById)
-userRoutes.get('', getUserByEmail)
+userRoutes.get('/one', getUserByEmail)
 userRoutes.put('/:id', updateUser)
 userRoutes.delete('/:id',deleteUser)
-
+userRoutes.post('/login', loginUser)
 
 
 

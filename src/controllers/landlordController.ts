@@ -8,30 +8,10 @@ import dotenv from 'dotenv'
 import path from 'path'
 dotenv.config({path:path.resolve(__dirname, '../../.env')})
 import jwt from 'jsonwebtoken'
+import { DatabaseHelper } from "../DatabaseHelper";
+import { LandLord, LandLordExtendedRequest } from "../Interfaces";
 
-interface ExtendedRequest extends Request{
-body:{
-    name:string
-    email:string
-    propertyDocs:string
-    password:string
-}
-}
-
-
-interface LandLord{
-    id:string
-    name:string
-    email:string
-    propertyDocs:string
-    isDeleted:number
-    approved:number
-    password:string
-    emailSent:string
-}
-
-
-export const addLandlord = async (req:ExtendedRequest, res:Response)=>{
+export const addLandlord = async (req:LandLordExtendedRequest, res:Response)=>{
     try {
         // From Request.body read:
         const {name,email,password,propertyDocs} =req.body
@@ -85,7 +65,7 @@ export const getUnApproved= async (req:Request, res:Response)=>{
        let approved= await (await pool.request()
         .input('type', 'unapproved')
         .execute('getLandLordsByStatus')).recordset
-        return res.status(200).json(approved)
+        // return res.status(200).json(approved)
         
     } catch (error:any) {
         //server side error
@@ -191,9 +171,7 @@ export const loginLandlord= async(req:Request, res:Response)=>{
       const pool =await mssql.connect(sqlConfig)  
       const {email,password}= req.body as {email:string, password:string}
       //check if the email provided is correct- if yes (user exist )if no(user doesn't exist)
-      let landlord:LandLord[]= await (await pool.request()
-      .input('email', email)
-      .execute('getLandLordByEmail')).recordset
+      let landlord:LandLord[]= (await DatabaseHelper.exec('getLandLordByEmail', {email})).recordset
       if(!landlord[0]){
         return res.status(404).json({message:"User not Found"})
       }

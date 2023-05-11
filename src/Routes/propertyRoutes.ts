@@ -10,7 +10,7 @@ const propertyRoutes= Router()
 propertyRoutes.post('',verifyToken, addProperty)
 propertyRoutes.get('',getAllProperties)
 propertyRoutes.get('/:id',getProperty)
-propertyRoutes.put('/:id', updateProperty)
+propertyRoutes.put('/:id',verifyToken, updateProperty)
 propertyRoutes.delete("/:id", deleteProperty)
 
 
