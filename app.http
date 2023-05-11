@@ -188,4 +188,4 @@ token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM1ZTBhM2ExLWYxYTctNGJhOS05M
   }
 
 ####
-DELETE  http://localhost:4000/property/c7a29a9d-a14c-4418-85c5-d9d037540363
+DELETE  http://localhost:4000/property/8323e09c-70ef-4566-bf83-59e5ce0f9be5

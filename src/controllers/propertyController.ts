@@ -1,7 +1,5 @@
 import { Response,Request } from "express";
-import mssql from 'mssql'
 import {v4 as uid} from 'uuid'
-import { sqlConfig } from "../config";
 import { DatabaseHelper } from "../DatabaseHelper";
 import { log } from "console";
 import { Property, PropertyExtendedRequest } from "../Interfaces";
@@ -81,9 +79,7 @@ export const updateProperty = async (req:PropertyExtendedRequest  ,res:Response)
 export const deleteProperty = async (req:Request <{id:string}> ,res:Response)=>{
 
     try {
-        const pool =await mssql.connect(sqlConfig)
         const {id}=req.params
-
         let property:Property[]= (await DatabaseHelper.exec('getProperty', {id})).recordset
 
         if(!property.length){

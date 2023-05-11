@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-import mssql from 'mssql'
 import {v4 as uid} from 'uuid'
-import { sqlConfig } from "../config";
 import bcrypt from 'bcrypt'
 import { registrationSchema } from "../Helpers/landlordValidations";
 import dotenv from 'dotenv'
@@ -24,14 +22,7 @@ export const addLandlord = async (req:LandLordExtendedRequest, res:Response)=>{
         //hash password
         let hashedPassword= await bcrypt.hash(password,10)
         let id =uid()
-        const pool= await mssql.connect(sqlConfig)
-        await pool.request()
-        .input('id', id)
-        .input('name', name)
-        .input('email', email)
-        .input('propertyDocs', propertyDocs)
-        .input('password', hashedPassword)
-        .execute('insertLandLord')
+        await DatabaseHelper.exec('insertLandLord',{id,name,email,propertyDocs ,password:hashedPassword})
         res.status(201).json({message:"Landlord Created"})
     } catch (error:any) {
          //server side error
@@ -45,11 +36,8 @@ export const addLandlord = async (req:LandLordExtendedRequest, res:Response)=>{
 export const getApproved= async (req:Request, res:Response)=>{
     try {
         
-        const pool = await mssql.connect(sqlConfig)
-       let approved= await (await pool.request()
-        .input('type', 'approved')
-        .execute('getLandLordsByStatus')).recordset
-        return res.status(200).json(approved)
+      let approved= (await DatabaseHelper.exec('getLandLordsByStatus', {type:'approved'})).recordset
+      return res.status(200).json(approved)
 
     } catch (error:any) {
         //server side error
@@ -60,12 +48,9 @@ export const getApproved= async (req:Request, res:Response)=>{
 
 export const getUnApproved= async (req:Request, res:Response)=>{
     try {
-        
-        const pool = await mssql.connect(sqlConfig)
-       let approved= await (await pool.request()
-        .input('type', 'unapproved')
-        .execute('getLandLordsByStatus')).recordset
-        // return res.status(200).json(approved)
+  
+        let unapproved= (await DatabaseHelper.exec('getLandLordsByStatus', {type:'unapproved'})).recordset
+        return res.status(200).json(unapproved)
         
     } catch (error:any) {
         //server side error
@@ -78,11 +63,8 @@ export const getUnApproved= async (req:Request, res:Response)=>{
 export const getLandLordById= async (req:Request<{id:string}>, res:Response)=>{
     try {
         const {id} =req.params
-        const pool = await mssql.connect(sqlConfig)
-       let landlord= await (await pool.request()
-        .input('id', id)
-        .execute('getLandLordById')).recordset
 
+        let landlord=(await DatabaseHelper.exec('getLandLordById', {id})).recordset
         if(landlord.length==0){
            return res.status(404).json({message:"Landlord Not Found"})
         }
@@ -97,12 +79,8 @@ export const getLandLordById= async (req:Request<{id:string}>, res:Response)=>{
 
 export const getLandLordByEmail= async (req:Request<{id:string}>, res:Response)=>{
     try {
-        const {email} =req.query
-        const pool = await mssql.connect(sqlConfig)
-       let landlord= await (await pool.request()
-        .input('email', email)
-        .execute('getLandLordByEmail')).recordset
-
+        const {email} =req.query as{ email:string}
+        let landlord=(await DatabaseHelper.exec('getLandLordByEmail', {email})).recordset
         if(landlord.length==0){
            return res.status(404).json({message:"Landlord Not Found"})
         }
@@ -118,22 +96,13 @@ export const getLandLordByEmail= async (req:Request<{id:string}>, res:Response)=
 export const updateLandlord=async(req:Request<{id:string}>, res:Response)=>{
         try {
             const {id} =req.params
-
-            const pool =await mssql.connect(sqlConfig)
-            let landlord= await (await pool.request()
-            .input('id', id)
-            .execute('getLandLordById')).recordset
-
+            let landlord=(await DatabaseHelper.exec('getLandLordById', {id})).recordset
             if(landlord.length==0){
             return res.status(404).json({message:"Landlord Not Found"})
             }
           
             const {name,email} =req.body
-            await pool.request()
-            .input('id', id)
-            .input('email', email)
-            .input('name', name)
-            .execute('updateLandlord')
+            await DatabaseHelper.exec('updateLandlord',{id,email,name})
             return res.status(200).json({message:"Landlord Updated"})
           } 
         catch (error:any) {
@@ -147,16 +116,11 @@ export const deleteLandLord=async(req:Request<{id:string}>, res:Response)=>{
     try {
         const {id} =req.params
 
-        const pool =await mssql.connect(sqlConfig)
-        let landlord= await (await pool.request()
-        .input('id', id)
-        .execute('getLandLordById')).recordset
+        let landlord=(await DatabaseHelper.exec('getLandLordById', {id})).recordset
         if(landlord.length==0){
         return res.status(404).json({message:"Landlord Not Found"})
         }
-        await pool.request()
-        .input('id', id)
-        .execute('deleteLandlord')
+        await DatabaseHelper.exec('deleteLandlord', {id})
         return res.status(200).json({message:"Landlord  Deleted"})
       } 
     catch (error:any) {
@@ -168,7 +132,6 @@ export const deleteLandLord=async(req:Request<{id:string}>, res:Response)=>{
 
 export const loginLandlord= async(req:Request, res:Response)=>{
     try {
-      const pool =await mssql.connect(sqlConfig)  
       const {email,password}= req.body as {email:string, password:string}
       //check if the email provided is correct- if yes (user exist )if no(user doesn't exist)
       let landlord:LandLord[]= (await DatabaseHelper.exec('getLandLordByEmail', {email})).recordset

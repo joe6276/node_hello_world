@@ -1,6 +1,5 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import mssql from 'mssql'
-import {v4 as uid} from 'uuid'
 import { sqlConfig } from "../config";
 import { AdminExtendedRequest, Landlord } from "../Interfaces";
 
