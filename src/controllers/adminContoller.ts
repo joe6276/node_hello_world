@@ -2,28 +2,10 @@ import { Request, Response } from "express";
 import mssql from 'mssql'
 import {v4 as uid} from 'uuid'
 import { sqlConfig } from "../config";
+import { AdminExtendedRequest, Landlord } from "../Interfaces";
 
-interface Landlord {
-    id:string
-    name:string
-    email:string
-    propertyDocs:string
-    password:string
-    isDeleted:number
-    approved:number
-    emailsent:number
-}
 
-interface DecodedData{
-    id: string;
-    name: string;
-    email: string;
-    roles:string
-}
-interface ExtendedRequest extends Request{
-    info?:DecodedData
-}
-export const approveLandlord=async(req:ExtendedRequest , res:Response)=>{
+export const approveLandlord=async(req:AdminExtendedRequest , res:Response)=>{
     try {
        
         if(req.info && req.info.roles=='admin'){
