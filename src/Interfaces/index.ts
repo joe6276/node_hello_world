@@ -77,4 +77,28 @@ export interface LandLordExtendedRequest extends Request{
         emailSent:string
     }
     
-    
+
+
+
+    ///user Interfaces 
+    export interface UserExtendedRequest extends Request{
+        body:{
+           name:string
+           email:string
+           password:string
+        }
+        params:{
+           id:string
+        }
+       }
+       
+       export interface User{
+           id:string
+           name:string
+           email:string
+           roles:string
+           isDeleted:number
+           password:string
+           emailSent:string
+       }
+       
