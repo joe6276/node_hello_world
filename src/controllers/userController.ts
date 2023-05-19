@@ -50,11 +50,11 @@ export const getUserByEmail:RequestHandler=async(req,res)=>{
         console.log(req.query)
         let user= await (await DatabaseHelper.query(`SELECT * FROM Users WHERE email=${email}`)).recordset[0]
         // let user:User = await (await DatabaseHelper.exec('getUserByEmail', {email})).recordset[0]
-        // if(user){
-        //     return res.status(200).json(user)
-        // }
-        // return res.status(404).json({message:"User Not Found"})
-        res.json(user)
+        if(user){
+            return res.status(200).json(user)
+        }
+        return res.status(404).json({message:"User Not Found"})
+        // res.json(user)
     } catch (error:any) {
          //server side error
          return res.status(500).json(error.message)
