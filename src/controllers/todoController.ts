@@ -13,7 +13,7 @@ export const getAllTodos =(req:Request, res:Response)=>{
 
 export const addTodo=(req:Request, res:Response)=>{
     const {title, description}=req.body as Todo
-    todos.push({id:Math.floor(Math.random()*10000), title,description})
+    todos.push({id:1, title,description})
     return res.status(201).json({message:"Todo added successfully..."})
 }
 
@@ -38,7 +38,7 @@ export const updateTodo=(req:Request<{id:string}>, res:Response)=>{
     })
     if(index>=0){
         todos[index]= {id:parseInt(id),title,description}
-        return res.status(204).json({message:"Todo Updated"})
+        return res.status(200).json({message:"Todo Updated"})
     }
     return res.status(404).json({message:"Todo not Found"})
 }
@@ -52,7 +52,7 @@ export const deleteTodo=(req:Request<{id:string}>, res:Response)=>{
 
     if(index>=0){
         todos.splice(index,1)
-        return res.status(204).json({message:"Todo Deleted"})
+        return res.status(200).json({message:"Todo Deleted"})
     }
    
     return res.status(404).json({message:"Todo not Found"})
