@@ -5,7 +5,6 @@ import userRoutes from './Routes/userRoutes'
 import landlordRoutes from './Routes/landLordRoutes'
 import adminRoutes from './Routes/adminRoutes'
 import propertyRoutes from './Routes/propertyRoutes'
-import { log } from 'console'
 const app=express()
 app.use(json())// middleware
 
@@ -15,9 +14,7 @@ app.use('/landlords', landlordRoutes)
 app.use('/admin', adminRoutes)
 app.use('/property', propertyRoutes)
 
-app.listen(4000,()=>{
-    log("server Running")
-})
+app.listen(4000)
 
 
 
