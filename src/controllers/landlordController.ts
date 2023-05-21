@@ -8,6 +8,7 @@ dotenv.config({path:path.resolve(__dirname, '../../.env')})
 import jwt from 'jsonwebtoken'
 import { DatabaseHelper } from "../DatabaseHelper";
 import { LandLord, LandLordExtendedRequest } from "../Interfaces";
+import { log } from "console";
 
 export const addLandlord = async (req:LandLordExtendedRequest, res:Response)=>{
     try {
@@ -77,11 +78,15 @@ export const getLandLordById= async (req:Request<{id:string}>, res:Response)=>{
 }
 
 
-export const getLandLordByEmail= async (req:Request<{id:string}>, res:Response)=>{
+export const getLandLordByEmail= async (req:Request, res:Response)=>{
     try {
-        const {email} =req.query as{ email:string}
-        let landlord=(await DatabaseHelper.exec('getLandLordByEmail', {email})).recordset
-        if(landlord.length==0){
+        const {email} =req.query as{email:string}
+        log(email)
+       //check if the email provided is correct- if yes (user exist )if no(user doesn't exist)
+      let landlord:LandLord[]= (await DatabaseHelper.exec('getLandLordsByEmail', {email})).recordset
+        log(landlord)
+       
+        if(!landlord.length){
            return res.status(404).json({message:"Landlord Not Found"})
         }
         return res.status(200).json(landlord[0])
@@ -134,7 +139,7 @@ export const loginLandlord= async(req:Request, res:Response)=>{
     try {
       const {email,password}= req.body as {email:string, password:string}
       //check if the email provided is correct- if yes (user exist )if no(user doesn't exist)
-      let landlord:LandLord[]= (await DatabaseHelper.exec('getLandLordByEmail', {email})).recordset
+      let landlord:LandLord[]= (await DatabaseHelper.exec('getLandLordsByEmail', {email})).recordset
       if(!landlord[0]){
         return res.status(404).json({message:"User not Found"})
       }
@@ -150,7 +155,7 @@ export const loginLandlord= async(req:Request, res:Response)=>{
         })
       // token 
       const token = jwt.sign(payload[0], process.env.SECRET_KEY as string, {expiresIn:'360000s'})
-      return res.json({mesage:"Login Successfull!!",token})
+      return res.status(200).json({message:"Login Successfull!!",token})
     } catch (error:any) {
         //server side error
      return res.status(500).json(error.message) 

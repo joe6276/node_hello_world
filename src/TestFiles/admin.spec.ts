@@ -5,7 +5,7 @@ import {describe,it,expect} from 'vitest'
 
 describe('Admin Controller Tests', ()=>{
     it('should approve a landlord',()=>{
-        return request(app).put('/admin/ee6b6a23-9b46-4fdf-9739-193828d9ba63')
+        return request(app).put('/admin/1bb06bc8-de9c-460e-a7cc-ee1d1399e552')
         .expect(200)
         .expect('Content-Type', /json/)
         .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjlkNTFiNTcyLWEzNTYtNDZlOS1iMTE1LTU1NTA2YTg0ZTEwMCIsIm5hbWUiOiJBZG1pbiIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwicm9sZXMiOiJhZG1pbiIsImlhdCI6MTY4NDU3MzM0MX0.XAWFPHExxeGyRQh_0zrwz4yWqhGEBru-dyMASpKenN4')
@@ -35,7 +35,7 @@ describe('Admin Controller Tests', ()=>{
 
     //incase we give a user token 
 
-    it('should approve a landlord',()=>{
+    it('should throw a 403 if i pass a user token',()=>{
         return request(app).put('/admin/ee6b6a23-9b46-4fdf-9739-193828d9ba63')
         .expect(403)
         .expect('Content-Type', /json/)

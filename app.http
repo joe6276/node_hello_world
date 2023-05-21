@@ -36,9 +36,9 @@ POST http://localhost:4000/users
 Content-Type:  application/json
 
 {
-   "name":"Kelvin" ,
-   "email":"kev@gmail.com",
-   "password":"12345678"
+   "name":"Admin" ,
+   "email":"admin@gmail.com",
+   "password":"Amazing@2024"
 }
 ####
 POST http://localhost:4000/users/login
@@ -69,11 +69,11 @@ GET http://localhost:4000/users/one?email='kelvin1@gmail.com'
 
 
 ###
-GET http://localhost:4000/users/user/cb7a5b45-d203-4f85-99be-b793702a9e8e
+GET http://localhost:4000/users/user/7f643dd9-18c7-4797-ba1e-471802e05f4e
 
 ###
 
-PUT http://localhost:4000/users/cb7a5b45-d203-4f85-99be-b793702a9e8e
+PUT http://localhost:4000/users/fsdsd
 Content-Type:  application/json
 
 {
@@ -120,6 +120,8 @@ GET http://localhost:4000/landlords/unapproved
 
 GET http://localhost:4000/landlords/get/30d2b669-adc5-478b-b01e-3b72a569a4cb
 
+####
+GET http://localhost:4000/landlords/get?email='jonathan@gmail.com'
 ###
 PUT http://localhost:4000/landlords/30d2b669-adc5-478b-b01e-3b72a569a4cb
 Content-Type: application/json
@@ -139,8 +141,19 @@ Content-Type: application/json
  "password":"12345678"
 }
 ###
+
+
+####
 DELETE  http://localhost:4000/landlords/30d2b669-adc5-478b-b01e-3b72a569a4cb
 ###
+POST http://localhost:4000/users/login
+Content-Type: application/json
+
+{
+   "email":"admin@gmail.com",
+   "password":"Amazing@2024"
+}
+####
 PUT http://localhost:4000/admin/35e0a3a1-f1a7-4ba9-9365-866228f3339e
 token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQzZmM5Y2Q4LTk2YTItNDBhYy1hOWIzLWM5ZWI5ZGVjMzg1YSIsIm5hbWUiOiJKYXkgIiwiZW1haWwiOiJqYXlAZ21haWwuY29tIiwicm9sZXMiOiJhZG1pbiIsImlhdCI6MTY4Mzc5MDE2Nn0.7SYfWt0yv6NHuSCbDpipmcELiwHUIC-tVf-OR391hsU
 
