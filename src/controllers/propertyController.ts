@@ -45,7 +45,7 @@ export const getProperty =async (req:Request<{id:string}>, res:Response)=>{
             return res.status(404).json({message:"Property Not Found"})
         }
 
-        return res.status(200).json(property)
+        return res.status(200).json(property[0])
     } catch (error:any) {
         
          //server side error
