@@ -5,7 +5,10 @@ import userRoutes from './Routes/userRoutes'
 import landlordRoutes from './Routes/landLordRoutes'
 import adminRoutes from './Routes/adminRoutes'
 import propertyRoutes from './Routes/propertyRoutes'
+import { log } from 'console'
+import cors from 'cors'
 const app=express()
+app.use(cors())
 app.use(json())// middleware
 
 app.use('/todo',router)
@@ -14,11 +17,13 @@ app.use('/landlords', landlordRoutes)
 app.use('/admin', adminRoutes)
 app.use('/property', propertyRoutes)
 
-app.listen(4000)
+
+app.listen(8080, ()=>{
+    log('Server Running')
+})
 
 
 
-export default app
 
 
 

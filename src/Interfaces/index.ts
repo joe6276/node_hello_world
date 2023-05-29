@@ -55,6 +55,11 @@ export interface PropertyExtendedRequest extends Request{
     info?:DecodedData
 }
 
+export interface PropertyExtendedRequest1 extends Request{
+    info?:DecodedData
+}
+
+
 ///Landlord Interfaces
 export interface LandLordExtendedRequest extends Request{
     body:{

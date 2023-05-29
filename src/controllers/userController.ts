@@ -24,7 +24,7 @@ export const addUser=async (req:UserExtendedRequest, res:Response)=>{
         
     } catch (error:any) {
         //server side error
-        return res.status(500).json(error.message)
+        return res.status(500).json({message:error.message})
     }
 }
 
@@ -128,7 +128,7 @@ export const loginUser= async (req:Request, res:Response)=>{
     try {
         const{email,password}= req.body
 
-        let user= await (await DatabaseHelper.query(`SELECT * FROM Users WHERE email='${email}'`)).recordset
+        let user:User[]= await (await DatabaseHelper.query(`SELECT * FROM Users WHERE email='${email}'`)).recordset
 
         if(!user[0]){
             return res.status(404).json({message:"User not Found"})
@@ -145,10 +145,10 @@ export const loginUser= async (req:Request, res:Response)=>{
             return rest
          })
          const token = jwt.sign(payload[0], process.env.SECRET_KEY as string)
-          res.status(200).json(token)
+          res.status(200).json({token,role:payload[0].roles ,username:payload[0].name})
 
     } catch (error:any) {
           //server side error
-          return res.status(500).json(error.message)
+          return res.status(500).json({message:error.message})
     }
 }

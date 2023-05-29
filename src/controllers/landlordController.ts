@@ -155,7 +155,7 @@ export const loginLandlord= async(req:Request, res:Response)=>{
         })
       // token 
       const token = jwt.sign(payload[0], process.env.SECRET_KEY as string, {expiresIn:'360000s'})
-      return res.status(200).json({message:"Login Successfull!!",token})
+      return res.status(200).json({message:"Login Successfull!!",token,role:'landlord'})
     } catch (error:any) {
         //server side error
      return res.status(500).json(error.message) 
